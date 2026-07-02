@@ -10,7 +10,13 @@ const Api = (() => {
 
   function parseParams() {
     const p = new URLSearchParams(window.location.search);
-    return { test: p.get('test'), tk: p.get('tk') };
+    return { test: p.get('test'), tk: p.get('tk'), k: p.get('k') };
+  }
+
+  // APIキーはURLの ?k= を優先（公開リポジトリに秘密を置かないため）
+  function apiKey() {
+    const { k } = parseParams();
+    return k || CONFIG.API_KEY;
   }
 
   function mockFromPattern(pattern) {
@@ -31,7 +37,7 @@ const Api = (() => {
   }
 
   async function fetchGas() {
-    const url = `${CONFIG.API_URL}?key=${encodeURIComponent(CONFIG.API_KEY)}`;
+    const url = `${CONFIG.API_URL}?key=${encodeURIComponent(apiKey())}`;
     const res = await fetch(url, { method: 'GET', redirect: 'follow' });
     if (!res.ok) throw new Error(`GAS HTTP ${res.status}`);
     const data = await res.json();
@@ -62,7 +68,7 @@ const Api = (() => {
         cleanup();
         reject(new Error('JSONP load error'));
       };
-      script.src = `${CONFIG.API_URL}?key=${encodeURIComponent(CONFIG.API_KEY)}&callback=${cbName}`;
+      script.src = `${CONFIG.API_URL}?key=${encodeURIComponent(apiKey())}&callback=${cbName}`;
       document.body.appendChild(script);
     });
   }
