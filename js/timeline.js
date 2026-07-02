@@ -157,24 +157,38 @@ const Timeline = (() => {
     btn.classList.add('is-hidden');
     $('winOwner').textContent = `${name} 様`;
     $('winEvent').textContent = eventName || CONFIG.EVENT.name.replace('\n', ' ');
-    gsap.set('#goldenTicket', { opacity: 0, scale: 0.55, rotation: -5 });
+    gsap.killTweensOf('#goldenTicket');
+    gsap.set('#goldenTicket', { opacity: 0, scale: 0.4, rotation: -8, rotationY: -35, y: 0 });
     gsap.set('#gtStamp', { opacity: 0, scale: 3, rotation: 12 });
+    gsap.set('#gtShock', { opacity: 0, scale: 0.4 });
+    $('gtRays').classList.remove('is-on');
 
     const tl = gsap.timeline();
+    // 0.0s バーン！（フラッシュ3連＋紙吹雪3連発）
     tl.call(() => {
-      Effects.flash(1, 0.6);
+      Effects.flash(1, 0.5);
       AudioMan.play('fanfare');
       Effects.confettiSides(170);
     }, [], 0);
-    tl.to('#goldenTicket', { opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: 'back.out(1.6)' }, 0.1);
-    tl.fromTo('.win-stage', { x: -9 }, { x: 9, duration: 0.055, repeat: 9, yoyo: true, clearProps: 'x' }, 0.1);
+    tl.to('#goldenTicket', { opacity: 1, scale: 1, rotation: 0, rotationY: 0, duration: 0.6, ease: 'back.out(1.7)' }, 0.08);
+    tl.fromTo('.win-stage', { x: -10 }, { x: 10, duration: 0.05, repeat: 11, yoyo: true, clearProps: 'x' }, 0.08);
+    tl.call(() => Effects.flash(0.5, 0.4), [], 0.45);
+    tl.call(() => { Effects.confettiCenter(130); Effects.flash(0.3, 0.4); }, [], 0.8);
+    tl.call(() => { $('gtRays').classList.add('is-on'); }, [], 0.9);
 
-    // 1.5s スタンプ「ご用意できました」
+    // 1.5s スタンプ「ご用意できました」＋衝撃波
     tl.to('#gtStamp', { opacity: 1, scale: 1, duration: 0.3, ease: 'power4.in' }, 1.5);
     tl.call(() => {
       AudioMan.play('stamp');
-      gsap.fromTo('#goldenTicket', { y: -6 }, { y: 0, duration: 0.3, ease: 'bounce.out' });
+      gsap.fromTo('#goldenTicket', { y: -8 }, { y: 0, duration: 0.35, ease: 'bounce.out' });
+      gsap.fromTo('#gtShock', { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.6, duration: 0.7, ease: 'power2.out' });
     }, [], 1.8);
+    tl.call(() => { Effects.confettiSides(90); Effects.goldShimmer(); }, [], 2.2);
+
+    // 2.8s チケットがふわふわ浮遊（結果画面の間ずっと）
+    tl.call(() => {
+      gsap.to('#goldenTicket', { y: -8, duration: 1.9, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    }, [], 2.8);
 
     // 3.0s 背景で花火
     tl.call(() => { Effects.fireworksStart(0.8); AudioMan.play('firework_pop'); }, [], 3.0);
@@ -185,6 +199,8 @@ const Timeline = (() => {
     tl.call(() => Effects.confettiSides(70), [], 6.0);
 
     btn.onclick = () => {
+      gsap.killTweensOf('#goldenTicket');
+      $('gtRays').classList.remove('is-on');
       Effects.fireworksStop();
       onNext();
     };
@@ -256,7 +272,7 @@ const Timeline = (() => {
       set('finEn', 'CURTAIN UP — SEE YOU AT THE VENUE');
       set('finTitle', '2人とも、\nご用意できました。');
       set('finLine1', 'LIVE、決定。');
-      set('finLine2', '2枚のチケットで、同じ景色を見に行こう。');
+      set('finLine2', '2口とも当選（計4席）。\nどちらの2席で行くか、嬉しい相談をしよう。');
       set('finEvent', ev);
       set('finNote', '※ 当選メールの入金期限（発表から数日）を今日中に確認！');
       btn.textContent = '演出を止める';
@@ -294,10 +310,10 @@ const Timeline = (() => {
       const winnerName = pattern === 'wl' ? names.me : names.her;
       scene.classList.add('finale--gold');
       $('finaleSky').classList.add('is-hidden');
-      set('finEn', 'ONE TICKET, TWO HOPES');
-      set('finTitle', '1枚の当選を、\n2人の希望に。');
+      set('finEn', 'TWO SEATS SECURED');
+      set('finTitle', '2席、確保。\n2人で、行ける。');
       set('finLine1', `${winnerName} の申込分が、当選。`);
-      set('finLine2', '枚数と同行者の扱いを、このあと2人で確認しよう。');
+      set('finLine2', '1口2席。ふたり並んで、同じ景色を見られる。');
       set('finEvent', ev);
       set('finNote', '※ 当選メールの入金期限（発表から数日）を今日中に確認！');
       btn.textContent = 'もう一度 祝う';

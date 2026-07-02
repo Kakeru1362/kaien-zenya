@@ -51,10 +51,16 @@ html, body {
   user-select: none;
 }
 
-/* ---------- シーン共通 ---------- */
+/* ---------- シーン共通 ----------
+   スマホ縦画面が正。PCで開いてもスマホ幅のカラムに固定する */
 .scene {
   position: fixed;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
   height: 100dvh;
   display: none;
   align-items: center;
@@ -302,4 +308,14 @@ html, body {
 @media (max-height: 640px) {
   .start-title { margin-bottom: 14px; }
   .start-label { margin-bottom: 22px; }
+}
+
+/* PCで開いた場合もスマホ幅カラム（携帯版の見た目に固定） */
+@media (min-width: 500px) {
+  body { background: #040302; }
+  .scene {
+    border-left: 1px solid rgba(207, 161, 74, 0.16);
+    border-right: 1px solid rgba(207, 161, 74, 0.16);
+    box-shadow: 0 0 90px rgba(0, 0, 0, 0.85);
+  }
 }

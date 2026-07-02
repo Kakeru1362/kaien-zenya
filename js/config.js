@@ -11,10 +11,10 @@ const CONFIG = Object.freeze({
   // テストモードの合言葉（?test=ww&tk=この値 で演出プレビュー）
   TEST_KEY: 'kaien2026',
 
-  // 封筒の宛名（本人たちの名前に変更する）
+  // 封筒の宛名
   NAMES: Object.freeze({
-    me: 'わたし',
-    her: 'きみ',
+    me: 'かける',
+    her: 'わかな',
   }),
 
   // 公演情報

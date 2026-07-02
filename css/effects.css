@@ -58,8 +58,34 @@
   padding: 0 22px;
   z-index: 10;
 }
+/* 当選の後光（回転する光線） */
+.gt-rays {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 160vmax;
+  height: 160vmax;
+  transform: translate(-50%, -50%);
+  background: repeating-conic-gradient(from 0deg,
+    rgba(240, 212, 124, 0.16) 0deg 6deg, transparent 6deg 22deg);
+  -webkit-mask: radial-gradient(circle, #000 0%, transparent 58%);
+  mask: radial-gradient(circle, #000 0%, transparent 58%);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.gt-rays.is-on {
+  opacity: 1;
+  animation: rays-spin 26s linear infinite;
+}
+@keyframes rays-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 .golden-ticket {
   position: relative;
+  z-index: 1;
   width: min(88vw, 380px);
   border-radius: 6px;
   background:
@@ -76,6 +102,39 @@
   mask: radial-gradient(circle 11px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
         radial-gradient(circle 11px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
 }
+/* チケット表面を走る光沢 */
+.golden-ticket::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background: linear-gradient(115deg,
+    transparent 30%, rgba(255, 252, 235, 0.45) 46%,
+    rgba(255, 252, 235, 0.12) 52%, transparent 62%);
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  animation: gt-sheen 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes gt-sheen {
+  0% { background-position: 130% 0; }
+  55% { background-position: -60% 0; }
+  100% { background-position: -60% 0; }
+}
+
+/* スタンプの衝撃波リング */
+.gt-shock {
+  position: absolute;
+  top: 16px;
+  right: 10px;
+  width: 96px;
+  height: 96px;
+  border: 3px solid rgba(163, 36, 47, 0.85);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .gt-inner {
   position: relative;
   border: 1.5px solid rgba(90, 62, 14, 0.65);
