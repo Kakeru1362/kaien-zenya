@@ -1,0 +1,324 @@
+/* ============================================================
+   effects.css — 結果画面 / フィナーレ / オーバーレイ
+   ============================================================ */
+
+/* ---------- オーバーレイ ---------- */
+#flash {
+  position: fixed;
+  inset: 0;
+  background: #fff8e2;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 60;
+}
+#blackout {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 55;
+}
+#grain {
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 70;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  animation: grain-shift 0.9s steps(4) infinite;
+}
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, 3%); }
+  50% { transform: translate(3%, -2%); }
+  75% { transform: translate(-3%, -3%); }
+  100% { transform: translate(2%, 2%); }
+}
+#fireworksBox {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ---------- 当選（ゴールデンチケット） ---------- */
+#scene-win {
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(120, 82, 20, 0.5) 0%, transparent 55%),
+    linear-gradient(180deg, #2a1c07 0%, #140d04 70%, #0a0603 100%);
+}
+.win-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+  width: 100%;
+  padding: 0 22px;
+  z-index: 10;
+}
+.golden-ticket {
+  position: relative;
+  width: min(88vw, 380px);
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255, 250, 220, 0.5) 0%, transparent 30%),
+    repeating-linear-gradient(45deg, rgba(120, 84, 20, 0.1) 0 2px, transparent 2px 9px),
+    linear-gradient(160deg, var(--gold-hi) 0%, var(--gold-1) 30%, var(--gold-2) 62%, var(--gold-1) 82%, var(--gold-hi) 100%);
+  box-shadow:
+    0 0 0 1px rgba(90, 62, 14, 0.85),
+    0 24px 70px rgba(0, 0, 0, 0.7),
+    0 0 90px rgba(240, 212, 124, 0.4);
+  /* チケットの切り欠き */
+  -webkit-mask: radial-gradient(circle 11px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+                radial-gradient(circle 11px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 11px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+        radial-gradient(circle 11px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+}
+.gt-inner {
+  position: relative;
+  border: 1.5px solid rgba(90, 62, 14, 0.65);
+  border-radius: 3px;
+  margin: 11px;
+  padding: 30px 22px 24px;
+  text-align: center;
+}
+.gt-en {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.44em;
+  color: #6b4c12;
+  margin-bottom: 16px;
+}
+.gt-result {
+  font-size: clamp(58px, 19vw, 84px);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  color: #3a2806;
+  text-shadow: 0 1px 0 rgba(255, 246, 214, 0.7), 0 -1px 1px rgba(70, 45, 8, 0.5);
+  margin-bottom: 14px;
+}
+.gt-owner {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #4c3609;
+  margin-bottom: 8px;
+}
+.gt-event {
+  font-size: 11.5px;
+  line-height: 1.9;
+  letter-spacing: 0.1em;
+  color: #5d4410;
+  margin-bottom: 18px;
+}
+.gt-serial {
+  font-family: var(--font-en);
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: #7a5a17;
+  border-top: 1px dashed rgba(90, 62, 14, 0.5);
+  padding-top: 12px;
+}
+
+/* 「ご用意できました」スタンプ */
+.gt-stamp {
+  position: absolute;
+  top: 16px;
+  right: 10px;
+  width: 96px; height: 96px;
+  border: 3px double var(--crimson);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(12deg) scale(3);
+  opacity: 0;
+  pointer-events: none;
+}
+.gt-stamp span {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  color: var(--crimson);
+  text-align: center;
+}
+
+/* ---------- 落選（夜空） ---------- */
+#scene-lose {
+  background: linear-gradient(180deg, var(--night-1) 0%, var(--night-2) 55%, #0d1526 100%);
+}
+.lose-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  width: 100%;
+  padding: 0 26px;
+  text-align: center;
+}
+.night-sky {
+  position: absolute;
+  inset: -60px;
+  pointer-events: none;
+  z-index: 0;
+}
+.night-sky .star {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: var(--night-star);
+  animation: star-blink 3.2s ease-in-out infinite;
+}
+@keyframes star-blink {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.95; }
+}
+.night-sky .shooting-star {
+  position: absolute;
+  width: 120px; height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--night-star));
+  transform: rotate(-30deg);
+  opacity: 0;
+}
+.lose-ticket {
+  position: relative;
+  z-index: 1;
+  width: min(84vw, 360px);
+  background: linear-gradient(180deg, #39435c 0%, #2a3349 100%);
+  border: 1px solid rgba(160, 178, 214, 0.35);
+  border-radius: 5px;
+  padding: 28px 20px 24px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+}
+.lt-en {
+  font-family: var(--font-en);
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: #93a5c8;
+  margin-bottom: 16px;
+}
+.lt-result {
+  font-size: clamp(19px, 5.8vw, 24px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #cdd8ec;
+  margin-bottom: 12px;
+}
+.lt-owner { font-size: 13px; letter-spacing: 0.22em; color: #8fa0c2; }
+.lose-line, .lose-line-2 {
+  position: relative;
+  z-index: 1;
+  font-size: 14.5px;
+  letter-spacing: 0.18em;
+  line-height: 2;
+  color: #b9c6e0;
+  opacity: 0;
+}
+.lose-line-2 { font-weight: 700; color: #dbe4f5; }
+#scene-lose .btn-line { position: relative; z-index: 1; border-color: rgba(160, 178, 214, 0.5); color: #c3d0e8; }
+
+/* ---------- フィナーレ ---------- */
+.finale-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#scene-finale.finale--gold {
+  background:
+    radial-gradient(130% 100% at 50% 0%, rgba(130, 88, 22, 0.55) 0%, transparent 55%),
+    linear-gradient(180deg, #251804 0%, #120c03 70%, #090502 100%);
+}
+#scene-finale.finale--night {
+  background: linear-gradient(180deg, var(--night-1) 0%, var(--night-2) 60%, #0d1526 100%);
+}
+.finale-box {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 0 30px;
+  max-width: 460px;
+}
+.fin-en {
+  font-family: var(--font-en);
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--gold-2);
+  margin-bottom: 22px;
+  opacity: 0;
+}
+.fin-title {
+  font-size: clamp(26px, 8vw, 42px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+  white-space: pre-line;
+  margin-bottom: 26px;
+  opacity: 0;
+}
+.finale--gold .fin-title {
+  background: var(--foil);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: foil-sheen 5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 22px rgba(240, 212, 124, 0.35));
+}
+.finale--night .fin-title { color: #dbe4f5; }
+.fin-line {
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  line-height: 2.2;
+  white-space: pre-line;
+  color: var(--paper-dim);
+  margin-bottom: 10px;
+  opacity: 0;
+}
+.finale--night .fin-line { color: #b9c6e0; }
+.fin-event {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  line-height: 1.9;
+  color: var(--gold-2);
+  margin: 18px 0 26px;
+  opacity: 0;
+}
+.finale--night .fin-event { color: #8fa0c2; }
+.fin-note {
+  margin-top: 24px;
+  font-size: 10.5px;
+  line-height: 1.9;
+  letter-spacing: 0.08em;
+  color: rgba(217, 203, 174, 0.55);
+  opacity: 0;
+}
+#scene-finale .btn-gold {
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  padding: 14px 30px;
+}
+#scene-finale.finale--night .btn-gold {
+  background: linear-gradient(175deg, #d5def0 0%, #a9b8d6 60%, #7e90b4 100%);
+  border-color: rgba(220, 230, 250, 0.8);
+  color: #1a2338;
+  box-shadow: 0 0 0 1px rgba(40, 55, 90, 0.9), 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 32px rgba(170, 190, 230, 0.25);
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  #grain { animation: none; }
+  .foil, .finale--gold .fin-title { animation: none; }
+}

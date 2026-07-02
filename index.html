@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>開演前夜 — 抽選結果発表</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;700;800&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/envelope.css">
+<link rel="stylesheet" href="css/effects.css">
+</head>
+<body>
+
+<!-- ========== S0: スタート（音声解錠） ========== -->
+<section id="scene-start" class="scene is-active">
+  <div class="start-frame">
+    <div class="start-border"></div>
+    <p class="start-en">ADMIT&nbsp;TWO&nbsp;&mdash;&nbsp;THE&nbsp;NIGHT&nbsp;BEFORE&nbsp;THE&nbsp;CURTAIN</p>
+    <h1 class="start-title"><span class="foil">開演前夜</span></h1>
+    <p class="start-sub">マカロニえんぴつ<br>マカロックツアー vol.22<br>〜いま、きみがすき！篇〜</p>
+    <p class="start-label">抽選結果発表</p>
+    <button id="btnStart" class="btn-gold btn-start">開 演 す る</button>
+    <p class="start-note">
+      &#x1F50A; 音が出ます — マナーモードを解除し、音量を上げてください<br>
+      LINEから開いた場合は Safari / Chrome で開き直してください
+    </p>
+  </div>
+</section>
+
+<!-- ========== 待機 / エラー ========== -->
+<section id="scene-waiting" class="scene">
+  <div class="center-box">
+    <div class="spotlight-pulse"></div>
+    <h2 class="waiting-title" id="waitingTitle">照明を落としています…</h2>
+    <p class="waiting-text" id="waitingText"></p>
+    <button id="btnRetry" class="btn-line is-hidden">もう一度確認する</button>
+  </div>
+</section>
+
+<!-- ========== S1: オープニング ========== -->
+<section id="scene-opening" class="scene">
+  <div class="opening-stage">
+    <div class="op-spot"></div>
+    <p class="op-date" id="opDate">2026.7.9</p>
+    <p class="op-line op-line-1">マカロニえんぴつ ライブチケット</p>
+    <p class="op-line op-line-2 foil">抽選結果発表</p>
+    <div class="op-envelopes">
+      <div class="op-env" id="opEnv1"><span class="op-env-name"></span></div>
+      <div class="op-env" id="opEnv2"><span class="op-env-name"></span></div>
+    </div>
+    <p class="op-line op-line-3" id="opLead">1通目から、開封します</p>
+  </div>
+</section>
+
+<!-- ========== S2/S5: 封筒 ========== -->
+<section id="scene-envelope" class="scene">
+  <div class="env-stage">
+    <header class="env-header">
+      <p class="env-count" id="envCount">FIRST ENVELOPE</p>
+      <h2 class="env-owner" id="envOwner"></h2>
+    </header>
+    <div class="envelope-wrap" id="envelopeWrap">
+      <div class="aura" id="aura"></div>
+      <div class="envelope" id="envelope">
+        <div class="env-back"></div>
+        <div class="ticket-in-env" id="ticketInEnv">
+          <p class="tie-en">LOTTERY&nbsp;RESULT</p>
+          <p class="tie-jp">抽選結果通知</p>
+        </div>
+        <div class="env-front">
+          <p class="env-addr" id="envAddr"></p>
+        </div>
+        <div class="env-flap" id="envFlap"></div>
+        <div class="wax-seal" id="waxSeal"><span class="seal-mono">結</span></div>
+      </div>
+    </div>
+    <p class="env-caption" id="envCaption">封蝋に、指をかけて。</p>
+    <button id="btnCut" class="btn-gold">封 を 切 る</button>
+  </div>
+</section>
+
+<!-- ========== S3/S6: 結果（当選） ========== -->
+<section id="scene-win" class="scene">
+  <div class="win-stage">
+    <div class="golden-ticket" id="goldenTicket">
+      <div class="gt-inner">
+        <p class="gt-en">GOLDEN&nbsp;TICKET</p>
+        <h2 class="gt-result">当 選</h2>
+        <div class="gt-stamp" id="gtStamp"><span>ご用意<br>できました</span></div>
+        <p class="gt-owner" id="winOwner"></p>
+        <p class="gt-event" id="winEvent"></p>
+        <p class="gt-serial">ADMIT&nbsp;ONE&nbsp;&mdash;&nbsp;MACAROCK&nbsp;TOUR&nbsp;VOL.22</p>
+      </div>
+    </div>
+    <button id="btnWinNext" class="btn-line is-hidden">次へ</button>
+  </div>
+</section>
+
+<!-- ========== S3/S6: 結果（落選） ========== -->
+<section id="scene-lose" class="scene">
+  <div class="lose-stage">
+    <div class="night-sky" id="nightSky"></div>
+    <div class="lose-ticket">
+      <p class="lt-en">LOTTERY&nbsp;RESULT</p>
+      <h2 class="lt-result">ご用意できませんでした</h2>
+      <p class="lt-owner" id="loseOwner"></p>
+    </div>
+    <p class="lose-line" id="loseLine">今回は、ご縁がありませんでした。</p>
+    <p class="lose-line-2 is-hidden" id="loseLine2">——でも、まだ1通ある。</p>
+    <button id="btnLoseNext" class="btn-line is-hidden">次へ</button>
+  </div>
+</section>
+
+<!-- ========== S4: 幕間 ========== -->
+<section id="scene-interlude" class="scene">
+  <div class="center-box">
+    <p class="interlude-line" id="interludeLine"></p>
+    <div class="op-env interlude-env" id="interludeEnv"><span class="op-env-name" id="interludeEnvName"></span></div>
+  </div>
+</section>
+
+<!-- ========== S7: フィナーレ ========== -->
+<section id="scene-finale" class="scene">
+  <div class="finale-stage" id="finaleStage">
+    <div class="night-sky is-hidden" id="finaleSky"></div>
+    <div class="finale-box">
+      <p class="fin-en" id="finEn"></p>
+      <h2 class="fin-title" id="finTitle"></h2>
+      <p class="fin-line" id="finLine1"></p>
+      <p class="fin-line" id="finLine2"></p>
+      <p class="fin-event" id="finEvent"></p>
+      <button id="btnFinale" class="btn-gold is-hidden"></button>
+      <p class="fin-note" id="finNote"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== オーバーレイ類 ========== -->
+<div id="fireworksBox"></div>
+<div id="flash"></div>
+<div id="blackout"></div>
+<div id="grain"></div>
+
+<!-- CDN（バージョン固定・SRI付き） -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" integrity="sha384-Rv68Y7adOjMMJc1/xFMcdNvXre/HF51to4GZjBALmXr7ABnVl5V4UajJwBu7zbhN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.10.8/dist/index.umd.js" integrity="sha384-D8v9Gvk91IZOYEwFeNp0CV2QAzIR++62X8P80wntECcCGNDjmMBaLZafSXfQ1Qt7" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" integrity="sha384-SSf4pKRrGaeWL8bdA89QvGkhZo5WvIVCGwKVzfX7z+9sSaIHtE/AkOLehofI4JVY" crossorigin="anonymous"></script>
+
+<script src="js/config.js"></script>
+<script src="js/synth.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/api.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

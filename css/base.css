@@ -1,0 +1,305 @@
+/* ============================================================
+   base.css — 変数 / リセット / 共通レイアウト / ボタン
+   テーマ: 深夜の劇場 × 金箔チケット
+   ============================================================ */
+
+:root {
+  /* 漆黒（暖色寄り） */
+  --ink: #0b0908;
+  --velvet-1: #191009;
+  --velvet-2: #241407;
+  /* 金箔 */
+  --gold-hi: #f9e9a8;
+  --gold-1: #f0d47c;
+  --gold-2: #cfa14a;
+  --gold-3: #8f6a24;
+  --gold-shadow: #4d3812;
+  /* 緞帳の深紅 */
+  --crimson: #8e1f2c;
+  --crimson-deep: #5c1019;
+  /* 象牙紙 */
+  --paper: #f2e7d0;
+  --paper-dim: #d9cbae;
+  /* 落選の夜空 */
+  --night-1: #0c1322;
+  --night-2: #1a2a47;
+  --night-star: #cfe0ff;
+  /* オーラ段階色 */
+  --aura-white: #efe9da;
+  --aura-blue: #4fa3e0;
+  --aura-red: #e8503f;
+  --aura-gold: #f4cf6a;
+
+  --font-jp: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-en: "Cinzel", "Times New Roman", serif;
+
+  --foil: linear-gradient(160deg,
+    var(--gold-3) 0%, var(--gold-1) 22%, var(--gold-hi) 38%,
+    var(--gold-1) 52%, var(--gold-3) 72%, var(--gold-2) 88%, var(--gold-hi) 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-jp);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* ---------- シーン共通 ---------- */
+.scene {
+  position: fixed;
+  inset: 0;
+  height: 100dvh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(63, 38, 12, 0.55) 0%, transparent 55%),
+    radial-gradient(100% 100% at 50% 110%, rgba(30, 12, 6, 0.9) 0%, transparent 60%),
+    linear-gradient(180deg, var(--velvet-1) 0%, var(--ink) 60%, #060404 100%);
+}
+.scene.is-active { display: flex; }
+
+.is-hidden { display: none !important; }
+
+.center-box {
+  position: relative;
+  text-align: center;
+  padding: 0 28px;
+  max-width: 480px;
+}
+
+/* ---------- 金箔テキスト ---------- */
+.foil {
+  background: var(--foil);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: foil-sheen 5s ease-in-out infinite;
+}
+@keyframes foil-sheen {
+  0%, 100% { background-position: 0% 30%; }
+  50% { background-position: 100% 70%; }
+}
+
+/* ---------- ボタン ---------- */
+.btn-gold {
+  position: relative;
+  font-family: var(--font-jp);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.35em;
+  text-indent: 0.35em;
+  color: #241703;
+  background: linear-gradient(175deg, var(--gold-hi) 0%, var(--gold-1) 35%, var(--gold-2) 75%, var(--gold-3) 100%);
+  border: 1px solid rgba(255, 240, 190, 0.85);
+  border-radius: 2px;
+  padding: 16px 44px;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 1px rgba(70, 48, 10, 0.9),
+    0 6px 24px rgba(0, 0, 0, 0.55),
+    0 0 32px rgba(240, 212, 124, 0.22);
+  transition: transform 0.15s ease, box-shadow 0.3s ease;
+}
+.btn-gold:active { transform: scale(0.96); }
+
+.btn-pulse { animation: btn-pulse 2.2s ease-in-out infinite; }
+@keyframes btn-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(70,48,10,.9), 0 6px 24px rgba(0,0,0,.55), 0 0 24px rgba(240,212,124,.18); }
+  50%      { box-shadow: 0 0 0 1px rgba(70,48,10,.9), 0 6px 24px rgba(0,0,0,.55), 0 0 52px rgba(240,212,124,.5); }
+}
+
+.btn-line {
+  font-family: var(--font-jp);
+  font-size: 15px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: var(--gold-1);
+  background: transparent;
+  border: 1px solid rgba(207, 161, 74, 0.55);
+  border-radius: 2px;
+  padding: 13px 38px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.15s ease;
+}
+.btn-line:active { transform: scale(0.96); background: rgba(207, 161, 74, 0.12); }
+
+/* ---------- S0 スタート ---------- */
+.start-frame {
+  position: relative;
+  text-align: center;
+  padding: 56px 30px 44px;
+  max-width: 420px;
+  width: calc(100% - 48px);
+}
+.start-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(207, 161, 74, 0.5);
+  outline: 1px solid rgba(207, 161, 74, 0.18);
+  outline-offset: 5px;
+  pointer-events: none;
+}
+.start-border::before, .start-border::after {
+  content: "";
+  position: absolute;
+  width: 34px; height: 34px;
+  border-color: var(--gold-1);
+  border-style: solid;
+}
+.start-border::before { top: -2px; left: -2px; border-width: 2px 0 0 2px; }
+.start-border::after  { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; }
+
+.start-en {
+  font-family: var(--font-en);
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  color: var(--gold-2);
+  margin-bottom: 26px;
+}
+.start-title {
+  font-size: clamp(44px, 14.5vw, 72px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 4px 18px rgba(240, 212, 124, 0.25));
+}
+.start-sub {
+  font-size: 14px;
+  line-height: 2.05;
+  letter-spacing: 0.14em;
+  color: var(--paper-dim);
+  margin-bottom: 14px;
+}
+.start-label {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;
+  color: var(--gold-1);
+  border-top: 1px solid rgba(207, 161, 74, 0.4);
+  border-bottom: 1px solid rgba(207, 161, 74, 0.4);
+  padding: 8px 6px;
+  margin-bottom: 36px;
+}
+.btn-start { animation: btn-pulse 2.2s ease-in-out infinite; }
+.start-note {
+  margin-top: 30px;
+  font-size: 10.5px;
+  line-height: 2;
+  letter-spacing: 0.06em;
+  color: rgba(217, 203, 174, 0.6);
+}
+
+/* ---------- 待機 ---------- */
+.spotlight-pulse {
+  width: 120px; height: 120px;
+  margin: 0 auto 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 212, 124, 0.35) 0%, transparent 65%);
+  animation: spot-breathe 2.6s ease-in-out infinite;
+}
+@keyframes spot-breathe {
+  0%, 100% { transform: scale(0.85); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+.waiting-title { font-size: 19px; font-weight: 600; letter-spacing: 0.2em; margin-bottom: 18px; }
+.waiting-text { font-size: 13px; line-height: 2.1; color: var(--paper-dim); margin-bottom: 30px; }
+
+/* ---------- S1 オープニング ---------- */
+.opening-stage { position: relative; text-align: center; width: 100%; padding: 0 24px; }
+.op-spot {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 150vmax; height: 150vmax;
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 232, 170, 0.16) 0%, rgba(255, 232, 170, 0.05) 30%, transparent 62%);
+  pointer-events: none;
+}
+.op-date {
+  font-family: var(--font-en);
+  font-size: 15px;
+  letter-spacing: 0.5em;
+  color: var(--gold-2);
+  opacity: 0;
+  margin-bottom: 26px;
+}
+.op-line { opacity: 0; }
+.op-line-1 { font-size: 15px; letter-spacing: 0.22em; color: var(--paper-dim); margin-bottom: 16px; }
+.op-line-2 {
+  font-size: clamp(38px, 11.5vw, 56px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-bottom: 44px;
+  filter: drop-shadow(0 4px 20px rgba(240, 212, 124, 0.3));
+}
+.op-line-3 { font-size: 13.5px; letter-spacing: 0.28em; color: var(--paper-dim); margin-top: 40px; }
+
+.op-envelopes { display: flex; justify-content: center; gap: 26px; }
+.op-env {
+  position: relative;
+  width: 118px; height: 78px;
+  background: linear-gradient(180deg, #efe4c9 0%, #ddcda6 100%);
+  border: 1px solid rgba(120, 90, 40, 0.5);
+  border-radius: 3px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 9px;
+}
+.op-env::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0;
+  border-left: 59px solid transparent;
+  border-right: 59px solid transparent;
+  border-top: 34px solid #cdbb92;
+  filter: drop-shadow(0 1px 1px rgba(90, 65, 25, 0.4));
+}
+.op-env::after {
+  content: "";
+  position: absolute;
+  top: 22px; left: 50%;
+  transform: translate(-50%, 0);
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #c96a4f, var(--crimson) 55%, var(--crimson-deep));
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.op-env-name {
+  position: relative;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #5a4520;
+  z-index: 1;
+}
+
+/* ---------- 幕間 ---------- */
+.interlude-line {
+  font-size: clamp(19px, 5.6vw, 24px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.9;
+  opacity: 0;
+  margin-bottom: 44px;
+}
+.interlude-env { margin: 0 auto; }
+
+/* ---------- スマホ縦最適化 ---------- */
+@media (max-height: 640px) {
+  .start-title { margin-bottom: 14px; }
+  .start-label { margin-bottom: 22px; }
+}
