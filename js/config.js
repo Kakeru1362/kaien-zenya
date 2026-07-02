@@ -3,9 +3,9 @@
    ============================================================ */
 
 const CONFIG = Object.freeze({
-  // GAS WebアプリのURL（Phase 3 で設定。空ならモック/pending動作）
-  API_URL: '',
-  // GASに渡す合言葉（GAS側 SECRET_KEY と一致させる）
+  // GAS WebアプリのURL（空ならモック/pending動作）
+  API_URL: 'https://script.google.com/macros/s/AKfycbwKo7PvHLuixtYIcJ1kN7DS1Mtp1-Yf89owvZi_M7YaNuYl-U0BEy8eIGoEu_9QR4_5aw/exec',
+  // GASに渡す合言葉はURLの ?k= で渡す（公開リポジトリに秘密を置かない）
   API_KEY: '',
 
   // テストモードの合言葉（?test=ww&tk=この値 で演出プレビュー）
