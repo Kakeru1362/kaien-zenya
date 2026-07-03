@@ -22,6 +22,18 @@
     <h1 class="start-title"><span class="foil">開演前夜</span></h1>
     <p class="start-sub">マカロニえんぴつ<br>マカロックツアー vol.22<br>〜いま、きみがすき！篇〜</p>
     <p class="start-label">抽選結果発表</p>
+    <svg class="start-emblem" viewBox="0 0 140 70" fill="none" aria-hidden="true">
+      <!-- マカロニ（C字のチューブ） -->
+      <path d="M60 20 A17 17 0 1 0 60 50" stroke="#cfa14a" stroke-width="11" stroke-linecap="round"/>
+      <path d="M60 20 A17 17 0 1 0 60 50" stroke="#0b0908" stroke-width="3.5" stroke-linecap="round" opacity="0.85"/>
+      <!-- 鉛筆（斜めに交差） -->
+      <g transform="rotate(-24 88 36)" stroke="#f0d47c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="56" y="30" width="52" height="12" rx="1.5"/>
+        <path d="M108 30 L121 36 L108 42"/>
+        <rect x="48" y="30" width="8" height="12" rx="2.5"/>
+        <line x1="108" y1="30" x2="108" y2="42"/>
+      </g>
+    </svg>
     <button id="btnStart" class="btn-gold btn-start">開 演 す る</button>
     <p class="start-note">
       &#x1F50A; 音が出ます — マナーモードを解除し、音量を上げてください<br>
@@ -134,6 +146,11 @@
       <p class="fin-line" id="finLine1"></p>
       <p class="fin-line" id="finLine2"></p>
       <p class="fin-event" id="finEvent"></p>
+      <div class="fin-photo is-hidden" id="finPhoto"><img id="finPhotoImg" alt=""></div>
+      <div class="fin-mv is-hidden" id="finMv">
+        <p class="fin-mv-label" id="finMvLabel"></p>
+        <div class="fin-mv-frame" id="finMvFrame"></div>
+      </div>
       <button id="btnFinale" class="btn-gold is-hidden"></button>
       <p class="fin-note" id="finNote"></p>
     </div>

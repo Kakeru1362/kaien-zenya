@@ -183,7 +183,7 @@ const Timeline = (() => {
       gsap.fromTo('#goldenTicket', { y: -8 }, { y: 0, duration: 0.35, ease: 'bounce.out' });
       gsap.fromTo('#gtShock', { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.6, duration: 0.7, ease: 'power2.out' });
     }, [], 1.8);
-    tl.call(() => { Effects.confettiSides(90); Effects.goldShimmer(); }, [], 2.2);
+    tl.call(() => { Effects.confettiSides(90); Effects.goldShimmer(); Effects.pencilBurst(14); }, [], 2.2);
 
     // 2.8s チケットがふわふわ浮遊（結果画面の間ずっと）
     tl.call(() => {
@@ -254,6 +254,45 @@ const Timeline = (() => {
     return tl;
   }
 
+  /* ---- フィナーレの公式MVカード ---- */
+  function setupMv(kind) {
+    const mv = CONFIG.MV && CONFIG.MV[kind];
+    const box = $('finMv');
+    if (!mv || !mv.id) {
+      box.classList.add('is-hidden');
+      return false;
+    }
+    $('finMvLabel').textContent = `♪ ${mv.title}`;
+    const frame = $('finMvFrame');
+    frame.textContent = '';
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(mv.id)}?rel=0`;
+    iframe.title = mv.title;
+    iframe.loading = 'lazy';
+    iframe.allowFullscreen = true;
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.appendChild(iframe);
+    box.classList.remove('is-hidden');
+    // MV再生（iframeタップ）時にアプリ側の音を止める
+    window.addEventListener('blur', () => {
+      const el = document.activeElement;
+      if (el && el.tagName === 'IFRAME') AudioMan.stopAll();
+    });
+    return true;
+  }
+
+  /* ---- フィナーレの写真（photos/finale.jpg があれば表示） ---- */
+  function setupPhoto() {
+    const probe = new Image();
+    probe.onload = () => {
+      $('finPhotoImg').src = probe.src;
+      $('finPhoto').classList.remove('is-hidden');
+      gsap.to('#finPhoto', { opacity: 1, duration: 1.0, delay: 0.6 });
+    };
+    probe.src = 'photos/finale.jpg';
+  }
+
   /* ================= S7: フィナーレ ================= */
   function playFinale(pattern, { names, eventName }) {
     const scene = $('scene-finale');
@@ -261,17 +300,21 @@ const Timeline = (() => {
     const set = (id, text) => { $(id).textContent = text; };
     const btn = $('btnFinale');
     btn.classList.add('is-hidden');
-    ['finEn', 'finTitle', 'finLine1', 'finLine2', 'finEvent', 'finNote'].forEach((id) => gsap.set(`#${id}`, { opacity: 0 }));
+    $('finPhoto').classList.add('is-hidden');
+    ['finEn', 'finTitle', 'finLine1', 'finLine2', 'finEvent', 'finNote', 'finMv', 'finPhoto'].forEach((id) => gsap.set(`#${id}`, { opacity: 0 }));
     gsap.set(btn, { opacity: 0 });
+    const hasMv = setupMv(pattern === 'll' ? 'lose' : 'win');
+    setupPhoto();
 
     const tl = gsap.timeline();
+    if (hasMv) tl.to('#finMv', { opacity: 1, duration: 0.9 }, pattern === 'll' ? 10.0 : 4.8);
 
     if (pattern === 'ww') {
       scene.classList.add('finale--gold');
       $('finaleSky').classList.add('is-hidden');
       set('finEn', 'CURTAIN UP — SEE YOU AT THE VENUE');
       set('finTitle', '2人とも、\nご用意できました。');
-      set('finLine1', 'LIVE、決定。');
+      set('finLine1', 'LIVE、決定。——「いま、きみがすき！」を、生で。');
       set('finLine2', '2口とも当選（計4席）。\nどちらの2席で行くか、嬉しい相談をしよう。');
       set('finEvent', ev);
       set('finNote', '※ 当選メールの入金期限（発表から数日）を今日中に確認！');

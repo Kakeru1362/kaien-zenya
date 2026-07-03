@@ -353,6 +353,50 @@
   opacity: 0;
 }
 .finale--night .fin-event { color: #8fa0c2; }
+/* フィナーレの写真（ポラロイド風） */
+.fin-photo {
+  width: min(64vw, 250px);
+  margin: 18px auto 4px;
+  padding: 10px 10px 30px;
+  background: #f5f0e4;
+  border-radius: 2px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+  transform: rotate(-2.5deg);
+  opacity: 0;
+}
+.fin-photo img {
+  display: block;
+  width: 100%;
+  border-radius: 1px;
+}
+
+/* フィナーレの公式MVカード */
+.fin-mv { margin-top: 20px; opacity: 0; }
+.fin-mv-label {
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  color: var(--gold-2);
+  margin-bottom: 10px;
+}
+.finale--night .fin-mv-label { color: #8fa0c2; }
+.fin-mv-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(207, 161, 74, 0.45);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+}
+.finale--night .fin-mv-frame { border-color: rgba(160, 178, 214, 0.4); }
+.fin-mv-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .fin-note {
   margin-top: 24px;
   font-size: 10.5px;

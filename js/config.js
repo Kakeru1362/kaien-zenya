@@ -23,6 +23,12 @@ const CONFIG = Object.freeze({
     dateLabel: '2026.7.9',
   }),
 
+  // フィナーレで流す公式MV（YouTube公式埋め込み。idが空ならカード非表示）
+  MV: Object.freeze({
+    win: Object.freeze({ id: '', title: '' }),
+    lose: Object.freeze({ id: '', title: '' }),
+  }),
+
   // APIリトライ
   FETCH_RETRY: 3,
   FETCH_RETRY_WAIT_MS: 1500,

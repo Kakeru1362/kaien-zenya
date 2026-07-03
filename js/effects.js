@@ -44,6 +44,27 @@ const Effects = (() => {
     });
   }
 
+  let pencilShape = null;
+  function pencilBurst(particleCount = 18) {
+    if (typeof confetti !== 'function' || typeof confetti.shapeFromText !== 'function') return;
+    try {
+      if (!pencilShape) pencilShape = confetti.shapeFromText({ text: '✏️', scalar: 3 });
+      confetti({
+        particleCount,
+        spread: 130,
+        startVelocity: 32,
+        gravity: 0.8,
+        scalar: 2.1,
+        ticks: 240,
+        shapes: [pencilShape],
+        origin: { x: 0.5, y: 0.5 },
+        disableForReducedMotion: true,
+      });
+    } catch (err) {
+      console.error('pencil confetti failed:', err);
+    }
+  }
+
   function goldShimmer() {
     if (typeof confetti !== 'function') return;
     confetti({
@@ -154,6 +175,7 @@ const Effects = (() => {
     confettiSides,
     confettiCenter,
     goldShimmer,
+    pencilBurst,
     confettiLoopStart,
     confettiLoopStop,
     fireworksStart,
