@@ -254,34 +254,6 @@ const Timeline = (() => {
     return tl;
   }
 
-  /* ---- フィナーレの公式MVカード ---- */
-  function setupMv(kind) {
-    const mv = CONFIG.MV && CONFIG.MV[kind];
-    const box = $('finMv');
-    if (!mv || !mv.id) {
-      box.classList.add('is-hidden');
-      return false;
-    }
-    $('finMvLabel').textContent = `♪ ${mv.title}`;
-    const frame = $('finMvFrame');
-    frame.textContent = '';
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(mv.id)}?rel=0`;
-    iframe.title = mv.title;
-    iframe.loading = 'lazy';
-    iframe.allowFullscreen = true;
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-    frame.appendChild(iframe);
-    box.classList.remove('is-hidden');
-    // MV再生（iframeタップ）時にアプリ側の音を止める
-    window.addEventListener('blur', () => {
-      const el = document.activeElement;
-      if (el && el.tagName === 'IFRAME') AudioMan.stopAll();
-    });
-    return true;
-  }
-
   /* ---- フィナーレの写真（photos/finale.jpg があれば表示） ---- */
   function setupPhoto() {
     const probe = new Image();
@@ -294,20 +266,18 @@ const Timeline = (() => {
   }
 
   /* ================= S7: フィナーレ ================= */
-  function playFinale(pattern, { names, eventName }) {
+  function playFinale(pattern, { names, eventName }, autoMv = false) {
     const scene = $('scene-finale');
     const ev = (eventName || CONFIG.EVENT.name).replace('\n', ' ');
     const set = (id, text) => { $(id).textContent = text; };
     const btn = $('btnFinale');
     btn.classList.add('is-hidden');
     $('finPhoto').classList.add('is-hidden');
-    ['finEn', 'finTitle', 'finLine1', 'finLine2', 'finEvent', 'finNote', 'finMv', 'finPhoto'].forEach((id) => gsap.set(`#${id}`, { opacity: 0 }));
+    ['finEn', 'finTitle', 'finLine1', 'finLine2', 'finEvent', 'finNote', 'finPhoto'].forEach((id) => gsap.set(`#${id}`, { opacity: 0 }));
     gsap.set(btn, { opacity: 0 });
-    const hasMv = setupMv(pattern === 'll' ? 'lose' : 'win');
     setupPhoto();
 
     const tl = gsap.timeline();
-    if (hasMv) tl.to('#finMv', { opacity: 1, duration: 0.9 }, pattern === 'll' ? 10.0 : 4.8);
 
     if (pattern === 'ww') {
       scene.classList.add('finale--gold');
@@ -321,10 +291,11 @@ const Timeline = (() => {
       btn.textContent = '演出を止める';
 
       tl.call(() => {
-        AudioMan.play('fanfare');
+        if (!autoMv) AudioMan.play('fanfare');
         Effects.flash(1, 0.8);
         Effects.fireworksStart(1.3);
         Effects.confettiCenter(200, Effects.RAINBOW_COLORS);
+        Effects.pencilBurst(12);
         Effects.confettiLoopStart(2600, Effects.GOLD_COLORS);
       }, [], 0);
       tl.to('#finEn', { opacity: 1, duration: 0.8 }, 0.6);
@@ -362,7 +333,7 @@ const Timeline = (() => {
       btn.textContent = 'もう一度 祝う';
 
       tl.call(() => {
-        AudioMan.play('fanfare');
+        if (!autoMv) AudioMan.play('fanfare');
         Effects.flash(0.8, 0.7);
         Effects.fireworksStart(0.6);
         Effects.confettiSides(110);
@@ -390,7 +361,7 @@ const Timeline = (() => {
       btn.textContent = 'リベンジを誓う';
 
       const starTimer = setInterval(() => Effects.shootingStar(sky), 3400);
-      tl.call(() => AudioMan.play('piano_calm'), [], 0.4);
+      tl.call(() => { if (!autoMv) AudioMan.play('piano_calm'); }, [], 0.4);
       tl.to('#finEn', { opacity: 1, duration: 1.2 }, 0.8);
       tl.to('#finTitle', { opacity: 1, duration: 1.4 }, 2.0);
       tl.to('#finLine1', { opacity: 1, duration: 1.2 }, 5.0);

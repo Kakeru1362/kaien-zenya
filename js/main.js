@@ -41,6 +41,7 @@
   /* ---------- フロー ---------- */
   function onStart() {
     AudioMan.unlock();
+    MvPlayer.loadApi();
     showScene('scene-waiting');
     $('waitingTitle').textContent = '照明を落としています…';
     $('waitingText').textContent = '';
@@ -157,11 +158,14 @@
   }
 
   function runFinale() {
+    const pattern = finalePattern();
     showScene('scene-finale');
-    Timeline.playFinale(finalePattern(), {
+    // フィナーレ入りのタップと同じコールスタック内で呼ぶ（音声つき自動再生の許可条件）
+    const autoMv = MvPlayer.autoplay(pattern === 'll' ? 'lose' : 'win');
+    Timeline.playFinale(pattern, {
       names: CONFIG.NAMES,
       eventName: state.results.me.eventName || state.results.her.eventName,
-    });
+    }, autoMv);
   }
 
   /* ---------- 初期化 ---------- */

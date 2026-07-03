@@ -148,10 +148,6 @@
       <p class="fin-line" id="finLine2"></p>
       <p class="fin-event" id="finEvent"></p>
       <div class="fin-photo is-hidden" id="finPhoto"><img id="finPhotoImg" alt=""></div>
-      <div class="fin-mv is-hidden" id="finMv">
-        <p class="fin-mv-label" id="finMvLabel"></p>
-        <div class="fin-mv-frame" id="finMvFrame"></div>
-      </div>
       <button id="btnFinale" class="btn-gold is-hidden"></button>
       <p class="fin-note" id="finNote"></p>
     </div>
@@ -159,6 +155,12 @@
 </section>
 
 <!-- ========== オーバーレイ類 ========== -->
+<!-- フィナーレで自動再生する公式MVドック -->
+<div id="mvDock">
+  <div id="mv-win"></div>
+  <div id="mv-lose"></div>
+  <button id="mvOverlay" class="is-hidden">▶ 音を出す</button>
+</div>
 <div id="fireworksBox"></div>
 <div id="flash"></div>
 <div id="blackout"></div>
@@ -175,6 +177,7 @@
 <script src="js/audio.js"></script>
 <script src="js/api.js"></script>
 <script src="js/effects.js"></script>
+<script src="js/mv.js"></script>
 <script src="js/timeline.js"></script>
 <script src="js/main.js"></script>
 </body>
