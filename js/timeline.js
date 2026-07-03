@@ -354,7 +354,7 @@ const Timeline = (() => {
       Effects.buildStars(sky, 90);
       set('finEn', 'THE NIGHT IS STILL YOUNG');
       set('finTitle', '今回は、2通とも\n届きませんでした。');
-      set('finLine1', 'でも、2人で今日まで待ったこの時間は、本物。');
+      set('finLine1', 'でも、2人で今日まで待った\nこの時間は、本物。');
       set('finLine2', '一般発売も、二次先行も、まだある。');
       set('finEvent', ev);
       set('finNote', '');
