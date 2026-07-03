@@ -24,9 +24,11 @@ const CONFIG = Object.freeze({
   }),
 
   // フィナーレで流す公式MV（YouTube公式埋め込み。idが空ならカード非表示）
+  // 候補: ヤングアダルト=b5qDEwUMIQg / NOW LOADING=rNeIk27_zs4 / 星が泳ぐ=ZlIdbht29kc
+  //       なんでもないよ、=2k21MgVKg4o / 悲しみはバスに乗って=Hv_VH6YBT8Q
   MV: Object.freeze({
-    win: Object.freeze({ id: '', title: '' }),
-    lose: Object.freeze({ id: '', title: '' }),
+    win: Object.freeze({ id: 'b5qDEwUMIQg', title: 'マカロニえんぴつ「ヤングアダルト」MV' }),
+    lose: Object.freeze({ id: '2k21MgVKg4o', title: 'マカロニえんぴつ「なんでもないよ、」MV' }),
   }),
 
   // APIリトライ
